@@ -34,7 +34,7 @@ public class FillWordImpl implements FillWord {
             keys[i]="A"+(i+1);
         }
         for(int i=0;i<keys.length;i++){
-            cont.put(keys[i],"B"+i);
+            cont.put(keys[i],"√");
         }
 
         try {
@@ -42,7 +42,7 @@ public class FillWordImpl implements FillWord {
             File fir = new File("./");
 
             //生成文件的路径及文件名。
-            File outFile = new File("./"+fileName+".doc");
+            File outFile = new File("./"+fileName+".docx");
 
             Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outFile), "UTF-8"));
 

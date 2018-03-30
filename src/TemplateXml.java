@@ -1,3 +1,6 @@
+
+import org.w3c.dom.Element;
+
 import javax.xml.parsers.ParserConfigurationException;
 
 /**
@@ -15,8 +18,8 @@ public interface TemplateXml {
     public void saveXml(String pathName);
 
     //解析xml文件,将xml文件加载到内存中形成树
-    public void loadingXml(String pathName) throws ParserConfigurationException;
+    public void loadingXml(String pathName);
 
     //递归遍历Xml,并且完成替换工作
-    public void parserXml();
+    public void parserXml(Element node);
 }

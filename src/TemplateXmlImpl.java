@@ -29,7 +29,7 @@ public class TemplateXmlImpl implements TemplateXml {
     private String[] reaplceWords;
 
     @Override
-    public void markerLabel(String pathName, String[] labels, String[] reaplaceWords) {
+    public void markerLabel(String pathName,String saveName, String[] labels, String[] reaplaceWords) {
 
                 //加载xml文件加载到document上面，并且将labels和reaplceWords赋值给私有属性，供解析替换使用
                 loadingXml(pathName);
@@ -41,7 +41,7 @@ public class TemplateXmlImpl implements TemplateXml {
                 parserXml(root);
 
                 //将document转化为xml文件并且储存
-                saveXml("./file/test1.xml");
+                saveXml(saveName);
     }
 
     @Override
@@ -113,7 +113,7 @@ public class TemplateXmlImpl implements TemplateXml {
             //判断这个节点是不是TEXT是则为需要找到节点
             if(childNode.getNodeType()==Node.TEXT_NODE){
                 String text=childNode.getNodeValue();
-                System.out.println(text);
+                //System.out.println(text);
                 int index=getIndexOfLabels(text);
                 if(index!=-1){
                     childNode.setNodeValue("${"+reaplceWords[index]+"?if_exists}");
@@ -129,7 +129,7 @@ public class TemplateXmlImpl implements TemplateXml {
 
     }
 
-    int getIndexOfLabels(String text){
+    private int getIndexOfLabels(String text){
         int index=-1;
         for (int i=0;i<labels.length;i++){
             if(labels[i].equals(text)){index=i;break;}

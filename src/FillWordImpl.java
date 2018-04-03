@@ -14,27 +14,23 @@ import java.util.Map;
 public class FillWordImpl implements FillWord {
 
 
-    @Override//给外部调用将data填入word中最后形成文件名字为fileName
-    public void fillData(String fileName, String data) {
+    @Override
+    public void fillData(String wordName,String templateXMLName,String data ,String[] markets) {
             //exportTemplate("./","test.xml","test.doc");
-            fillWordTmplate(fileName,null);
-    }
-
-    //打开pathName的XML文件，将里面的replaceWord[i]单词替换成${Labes[i]？if_exists}形成模板供填入使用
-    public void markerLabel(String pathName,String[] Labels,String[] reaplaceWord){
+            String[] datas=data.split(";");
+            fillWordTmplate(wordName,templateXMLName,datas,markets);
 
     }
 
-    //将data填入word模板中最后文件命名为fileName
-    private void fillWordTmplate(String fileName,String[] data){
+
+    //将data填入word模板中被market标记的内容上面最后文件命名为fileName
+    private void fillWordTmplate(String fileName,String templateXMLName,String[] data,String[] markets){
 
         Map<String, Object> cont = new HashMap<String, Object>();// 存储数据
-        String[] keys=new String[62];
-        for(int i=0;i<62;i++){
-            keys[i]="A"+(i+1);
-        }
-        for(int i=0;i<keys.length;i++){
-            cont.put(keys[i],"√");
+
+        for(int i=0;i<markets.length;i++){
+            //防止数组越界
+            if(i<data.length) cont.put(markets[i],data[i]);
         }
 
         try {
@@ -42,7 +38,7 @@ public class FillWordImpl implements FillWord {
             File fir = new File("./");
 
             //生成文件的路径及文件名。
-            File outFile = new File("./"+fileName+".docx");
+            File outFile = new File(fileName);
 
             Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outFile), "UTF-8"));
 
@@ -50,7 +46,7 @@ public class FillWordImpl implements FillWord {
             //指定模板路径
             TemplateLoader templateLoader = null;
             templateLoader = new FileTemplateLoader(fir);
-            String tempname = "AllTestTabel.xml";
+            String tempname = templateXMLName;
 
             Configuration cfg = new Configuration();
             cfg.setTemplateLoader(templateLoader);
